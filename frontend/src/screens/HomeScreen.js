@@ -1,11 +1,12 @@
 import React, { useEffect, useReducer } from 'react';
-// import data from '../data'
 
 import axios from 'axios';
 import logger from 'use-reducer-logger';
 import {Row,Col} from 'react-bootstrap';
 import Product from '../components/Product';
 import { Helmet } from 'react-helmet-async';
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -34,7 +35,7 @@ function HomeScreen() {
         const result = await axios.get('/api/products');
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: err.messae });
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
       }
     };
     fetchData();
@@ -45,10 +46,10 @@ function HomeScreen() {
       <Helmet><title>Amazona</title></Helmet>
       <h1>Featured Products</h1>
       <div className="products">
-        {loading ? (
-          <div>Loading ...</div>
+        {loading ? (          
+          <LoadingBox />        
         ) : error ? (
-          <div>Error</div>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Row>
             {products.map((product) => (
