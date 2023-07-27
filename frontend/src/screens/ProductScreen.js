@@ -51,6 +51,7 @@ function ProductScreen() {
   // cart Handler
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {cart} = state;
+  
   const addtoCartHandler = async() => {
     const existItem = cart.cartItems.find((x) =>x._id === product._id); // to check current product already in cart,
     const quantity = existItem ? existItem.quantity +1 : 1; //same product added then increase quantity else set '1'
