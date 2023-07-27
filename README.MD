@@ -87,4 +87,8 @@
     2. add email and password
     3. add sign in button
 
-    
+19. Connect To MongoDB Database
+    1. create atlas monogodb database
+    2. install local mongodb database
+    3. npm install mongoose
+    4. connect to mongodb database   
