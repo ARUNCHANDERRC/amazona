@@ -8,37 +8,37 @@ import { toast } from 'react-toastify';
 import { getError } from '../utils';
 
 export default function SigninScreen() {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const {search} = useLocation();
-    const redirectInUrl = new URLSearchParams(search).get('redirect');
-    const redirect = redirectInUrl ? redirectInUrl : '/';
-    
-    const[email,setEmail] = useState('');
-    const[password,setPassword] = useState('');
-    
-    const {state,dispatch:ctxDispatch} = useContext(Store)
-   const{userInfo} = state;
-    const submitHandler = async(e) => {
-      e.preventDefault();
-      try {
-        const { data } = await Axios.post('/api/users/signin',{
-         email,
-         password,
-        })
-        ctxDispatch({type:'USER_SIGNIN',payload:data})
-        localStorage.setItem('userInfo',JSON.stringify(data))
-        navigate(redirect || '/');
-      } catch (err) {
-        toast.error(getError(err))
-        // alert('Invalid Email or Password')
-      }
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get('redirect');
+  const redirect = redirectInUrl ? redirectInUrl : '/';
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await Axios.post('/api/users/signin', {
+        email,
+        password,
+      });
+      ctxDispatch({ type: 'USER_SIGNIN', payload: data });
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      navigate(redirect || '/');
+    } catch (err) {
+      toast.error(getError(err));
+      // alert('Invalid Email or Password')
     }
-    useEffect(()=>{
-      if(userInfo){
-        navigate(redirect);
-      }
-    },[navigate,redirect,userInfo]);
+  };
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [navigate, redirect, userInfo]);
 
   return (
     <div>
@@ -50,20 +50,28 @@ export default function SigninScreen() {
         <Form onSubmit={submitHandler}>
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" required onChange={(e)=>setEmail(e.target.value)}></Form.Control>
+            <Form.Control
+              type="email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            ></Form.Control>
           </Form.Group>
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" required onChange={(e)=>setPassword(e.target.value)}></Form.Control>
+            <Form.Control
+              type="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            ></Form.Control>
           </Form.Group>
-          <div className='mb-3'>
-            <Button type='submit'>Sign In</Button>
+          <div className="mb-3">
+            <Button type="submit">Sign In</Button>
           </div>
-          <div className='mb-3'>
+          <div className="mb-3">
             New customer?{' '}
             <Link to={`/signup?redirect=${redirect}`}>Create your account</Link>
           </div>
-        </Form>        
+        </Form>
       </Container>
     </div>
   );
