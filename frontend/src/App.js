@@ -18,6 +18,7 @@ import SignupScreen from './screens/SignupScreen ';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
 
 function App() {
   const { state ,dispatch:ctxDispatch } = useContext(Store);
@@ -35,12 +36,14 @@ function App() {
       <div className="d-flex flex-column site-container">
        <ToastContainer position='bottom-center' limit={1} />
         <header>
-          <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
               <LinkContainer to="/">
                 <Navbar.Brand>amazona</Navbar.Brand>
               </LinkContainer>
-              <Nav className="me-auto">
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto w-100 justify-content-end">
                 <Link to="/cart" className="nav-link">
                   cart
                   {cart.cartItems.length > 0 && (
@@ -70,6 +73,7 @@ function App() {
                   <Link className="nav-link" to="/signin">Sign In</Link>
                 )}
               </Nav>
+              </Navbar.Collapse>
             </Container>
           </Navbar>
         </header>
@@ -84,7 +88,10 @@ function App() {
               <Route path="/shipping" element={<ShippingAddressScreen/>} />
               <Route path="/payment" element={<PaymentMethodScreen/>} />
               <Route path="/placeorder" element={<PlaceOrderScreen/>} />
-              <Route path="/order/:id" element={<OrderScreen/>} />    
+              <Route path="/order/:id" element={<OrderScreen/>} />
+              <Route path="/orderhistory" element={<OrderHistoryScreen />}
+              ></Route> 
+
             </Routes>
           </Container>
         </main>
